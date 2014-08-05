@@ -237,8 +237,8 @@ mat2d.translate = function(out, a, v) {
  * @returns {String} string representation of the matrix
  */
 mat2d.str = function (a) {
-    return 'mat2d(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
-                    a[3] + ', ' + a[4] + ', ' + a[5] + ')';
+    return 'mat2d(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + 
+                    a[3] + SEP + a[4] + SEP + a[5] + ')';
 };
 
 /**
@@ -251,6 +251,6 @@ mat2d.frob = function (a) {
     return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1))
 }; 
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.mat2d = mat2d;
 }

@@ -517,9 +517,9 @@ vec2.forEach = (function() {
  * @returns {String} string representation of the vector
  */
 vec2.str = function (a) {
-    return 'vec2(' + a[0] + ', ' + a[1] + ')';
+    return 'vec2(' + a[0] + SEP + a[1] + ')';
 };
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.vec2 = vec2;
 }

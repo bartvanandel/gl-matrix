@@ -628,9 +628,9 @@ vec3.forEach = (function() {
  * @returns {String} string representation of the vector
  */
 vec3.str = function (a) {
-    return 'vec3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ')';
+    return 'vec3(' + a[0] + SEP + a[1] + SEP + a[2] + ')';
 };
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.vec3 = vec3;
 }

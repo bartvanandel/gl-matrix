@@ -520,9 +520,9 @@ quat.fromMat3 = function(out, m) {
  * @returns {String} string representation of the vector
  */
 quat.str = function (a) {
-    return 'quat(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
+    return 'quat(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + a[3] + ')';
 };
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.quat = quat;
 }

@@ -229,7 +229,7 @@ mat2.scale = function(out, a, v) {
  * @returns {String} string representation of the matrix
  */
 mat2.str = function (a) {
-    return 'mat2(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
+    return 'mat2(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + a[3] + ')';
 };
 
 /**
@@ -258,6 +258,6 @@ mat2.LDU = function (L, D, U, a) {
     return [L, D, U];       
 }; 
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.mat2 = mat2;
 }

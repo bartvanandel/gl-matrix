@@ -468,9 +468,9 @@ mat3.normalFromMat4 = function (out, a) {
  * @returns {String} string representation of the matrix
  */
 mat3.str = function (a) {
-    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
-                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + 
-                    a[6] + ', ' + a[7] + ', ' + a[8] + ')';
+    return 'mat3(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + 
+                    a[3] + SEP + a[4] + SEP + a[5] + SEP + 
+                    a[6] + SEP + a[7] + SEP + a[8] + ')';
 };
 
 /**
@@ -484,6 +484,6 @@ mat3.frob = function (a) {
 };
 
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.mat3 = mat3;
 }

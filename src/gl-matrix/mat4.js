@@ -888,10 +888,10 @@ mat4.lookAt = function (out, eye, center, up) {
  * @returns {String} string representation of the matrix
  */
 mat4.str = function (a) {
-    return 'mat4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' +
-                    a[4] + ', ' + a[5] + ', ' + a[6] + ', ' + a[7] + ', ' +
-                    a[8] + ', ' + a[9] + ', ' + a[10] + ', ' + a[11] + ', ' + 
-                    a[12] + ', ' + a[13] + ', ' + a[14] + ', ' + a[15] + ')';
+    return 'mat4(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + a[3] + SEP +
+                    a[4] + SEP + a[5] + SEP + a[6] + SEP + a[7] + SEP +
+                    a[8] + SEP + a[9] + SEP + a[10] + SEP + a[11] + SEP + 
+                    a[12] + SEP + a[13] + SEP + a[14] + SEP + a[15] + ')';
 };
 
 /**
@@ -905,6 +905,6 @@ mat4.frob = function (a) {
 };
 
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.mat4 = mat4;
 }

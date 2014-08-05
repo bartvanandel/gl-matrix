@@ -20,12 +20,15 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
+var UNDEF = 'undefined';
+var SEP = ', ';
+
 if(!GLMAT_EPSILON) {
     var GLMAT_EPSILON = 0.000001;
 }
 
 if(!GLMAT_ARRAY_TYPE) {
-    var GLMAT_ARRAY_TYPE = (typeof Float32Array !== 'undefined') ? Float32Array : Array;
+    var GLMAT_ARRAY_TYPE = (typeof Float32Array !== UNDEF) ? Float32Array : Array;
 }
 
 if(!GLMAT_RANDOM) {
@@ -47,7 +50,7 @@ glMatrix.setMatrixArrayType = function(type) {
     GLMAT_ARRAY_TYPE = type;
 }
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.glMatrix = glMatrix;
 }
 
