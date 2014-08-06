@@ -72,12 +72,15 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 
+var UNDEF = 'undefined';
+var SEP = ', ';
+
 if(!GLMAT_EPSILON) {
     var GLMAT_EPSILON = 0.000001;
 }
 
 if(!GLMAT_ARRAY_TYPE) {
-    var GLMAT_ARRAY_TYPE = (typeof Float32Array !== 'undefined') ? Float32Array : Array;
+    var GLMAT_ARRAY_TYPE = (typeof Float32Array !== UNDEF) ? Float32Array : Array;
 }
 
 if(!GLMAT_RANDOM) {
@@ -99,7 +102,7 @@ glMatrix.setMatrixArrayType = function(type) {
     GLMAT_ARRAY_TYPE = type;
 }
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.glMatrix = glMatrix;
 }
 
@@ -428,6 +431,19 @@ vec2.negate = function(out, a) {
 };
 
 /**
+ * Returns the inverse of the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to invert
+ * @returns {vec2} out
+ */
+vec2.inverse = function(out, a) {
+  out[0] = 1.0 / a[0];
+  out[1] = 1.0 / a[1];
+  return out;
+};
+
+/**
  * Normalize a vec2
  *
  * @param {vec2} out the receiving vector
@@ -621,10 +637,10 @@ vec2.forEach = (function() {
  * @returns {String} string representation of the vector
  */
 vec2.str = function (a) {
-    return 'vec2(' + a[0] + ', ' + a[1] + ')';
+    return 'vec2(' + a[0] + SEP + a[1] + ')';
 };
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.vec2 = vec2;
 }
 ;
@@ -962,6 +978,20 @@ vec3.negate = function(out, a) {
 };
 
 /**
+ * Returns the inverse of the components of a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to invert
+ * @returns {vec3} out
+ */
+vec3.inverse = function(out, a) {
+  out[0] = 1.0 / a[0];
+  out[1] = 1.0 / a[1];
+  out[2] = 1.0 / a[2];
+  return out;
+};
+
+/**
  * Normalize a vec3
  *
  * @param {vec3} out the receiving vector
@@ -1061,10 +1091,12 @@ vec3.random = function (out, scale) {
  * @returns {vec3} out
  */
 vec3.transformMat4 = function(out, a, m) {
-    var x = a[0], y = a[1], z = a[2];
-    out[0] = m[0] * x + m[4] * y + m[8] * z + m[12];
-    out[1] = m[1] * x + m[5] * y + m[9] * z + m[13];
-    out[2] = m[2] * x + m[6] * y + m[10] * z + m[14];
+    var x = a[0], y = a[1], z = a[2],
+        w = m[3] * x + m[7] * y + m[11] * z + m[15];
+    w = w || 1.0;
+    out[0] = (m[0] * x + m[4] * y + m[8] * z + m[12]) / w;
+    out[1] = (m[1] * x + m[5] * y + m[9] * z + m[13]) / w;
+    out[2] = (m[2] * x + m[6] * y + m[10] * z + m[14]) / w;
     return out;
 };
 
@@ -1243,10 +1275,10 @@ vec3.forEach = (function() {
  * @returns {String} string representation of the vector
  */
 vec3.str = function (a) {
-    return 'vec3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ')';
+    return 'vec3(' + a[0] + SEP + a[1] + SEP + a[2] + ')';
 };
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.vec3 = vec3;
 }
 ;
@@ -1604,6 +1636,21 @@ vec4.negate = function(out, a) {
 };
 
 /**
+ * Returns the inverse of the components of a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to invert
+ * @returns {vec4} out
+ */
+vec4.inverse = function(out, a) {
+  out[0] = 1.0 / a[0];
+  out[1] = 1.0 / a[1];
+  out[2] = 1.0 / a[2];
+  out[3] = 1.0 / a[3];
+  return out;
+};
+
+/**
  * Normalize a vec4
  *
  * @param {vec4} out the receiving vector
@@ -1726,7 +1773,7 @@ vec4.transformQuat = function(out, a, q) {
  * @param {Array} a the array of vectors to iterate over
  * @param {Number} stride Number of elements between the start of each vec4. If 0 assumes tightly packed
  * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec2s to iterate over. If 0 iterates over entire array
+ * @param {Number} count Number of vec4s to iterate over. If 0 iterates over entire array
  * @param {Function} fn Function to call for each vector in the array
  * @param {Object} [arg] additional argument to pass to fn
  * @returns {Array} a
@@ -1768,10 +1815,10 @@ vec4.forEach = (function() {
  * @returns {String} string representation of the vector
  */
 vec4.str = function (a) {
-    return 'vec4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
+    return 'vec4(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + a[3] + ')';
 };
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.vec4 = vec4;
 }
 ;
@@ -2007,7 +2054,7 @@ mat2.scale = function(out, a, v) {
  * @returns {String} string representation of the matrix
  */
 mat2.str = function (a) {
-    return 'mat2(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
+    return 'mat2(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + a[3] + ')';
 };
 
 /**
@@ -2036,7 +2083,7 @@ mat2.LDU = function (L, D, U, a) {
     return [L, D, U];       
 }; 
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.mat2 = mat2;
 }
 ;
@@ -2280,8 +2327,8 @@ mat2d.translate = function(out, a, v) {
  * @returns {String} string representation of the matrix
  */
 mat2d.str = function (a) {
-    return 'mat2d(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
-                    a[3] + ', ' + a[4] + ', ' + a[5] + ')';
+    return 'mat2d(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + 
+                    a[3] + SEP + a[4] + SEP + a[5] + ')';
 };
 
 /**
@@ -2294,7 +2341,7 @@ mat2d.frob = function (a) {
     return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1))
 }; 
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.mat2d = mat2d;
 }
 ;
@@ -2769,9 +2816,9 @@ mat3.normalFromMat4 = function (out, a) {
  * @returns {String} string representation of the matrix
  */
 mat3.str = function (a) {
-    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
-                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + 
-                    a[6] + ', ' + a[7] + ', ' + a[8] + ')';
+    return 'mat3(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + 
+                    a[3] + SEP + a[4] + SEP + a[5] + SEP + 
+                    a[6] + SEP + a[7] + SEP + a[8] + ')';
 };
 
 /**
@@ -2785,7 +2832,7 @@ mat3.frob = function (a) {
 };
 
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.mat3 = mat3;
 }
 ;
@@ -3680,10 +3727,10 @@ mat4.lookAt = function (out, eye, center, up) {
  * @returns {String} string representation of the matrix
  */
 mat4.str = function (a) {
-    return 'mat4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' +
-                    a[4] + ', ' + a[5] + ', ' + a[6] + ', ' + a[7] + ', ' +
-                    a[8] + ', ' + a[9] + ', ' + a[10] + ', ' + a[11] + ', ' + 
-                    a[12] + ', ' + a[13] + ', ' + a[14] + ', ' + a[15] + ')';
+    return 'mat4(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + a[3] + SEP +
+                    a[4] + SEP + a[5] + SEP + a[6] + SEP + a[7] + SEP +
+                    a[8] + SEP + a[9] + SEP + a[10] + SEP + a[11] + SEP + 
+                    a[12] + SEP + a[13] + SEP + a[14] + SEP + a[15] + ')';
 };
 
 /**
@@ -3697,7 +3744,7 @@ mat4.frob = function (a) {
 };
 
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.mat4 = mat4;
 }
 ;
@@ -4193,9 +4240,9 @@ quat.fromMat3 = function(out, m) {
         fRoot = Math.sqrt(fTrace + 1.0);  // 2w
         out[3] = 0.5 * fRoot;
         fRoot = 0.5/fRoot;  // 1/(4w)
-        out[0] = (m[7]-m[5])*fRoot;
-        out[1] = (m[2]-m[6])*fRoot;
-        out[2] = (m[3]-m[1])*fRoot;
+        out[0] = (m[5]-m[7])*fRoot;
+        out[1] = (m[6]-m[2])*fRoot;
+        out[2] = (m[1]-m[3])*fRoot;
     } else {
         // |w| <= 1/2
         var i = 0;
@@ -4209,7 +4256,7 @@ quat.fromMat3 = function(out, m) {
         fRoot = Math.sqrt(m[i*3+i]-m[j*3+j]-m[k*3+k] + 1.0);
         out[i] = 0.5 * fRoot;
         fRoot = 0.5 / fRoot;
-        out[3] = (m[k*3+j] - m[j*3+k]) * fRoot;
+        out[3] = (m[j*3+k] - m[k*3+j]) * fRoot;
         out[j] = (m[j*3+i] + m[i*3+j]) * fRoot;
         out[k] = (m[k*3+i] + m[i*3+k]) * fRoot;
     }
@@ -4224,10 +4271,10 @@ quat.fromMat3 = function(out, m) {
  * @returns {String} string representation of the vector
  */
 quat.str = function (a) {
-    return 'quat(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
+    return 'quat(' + a[0] + SEP + a[1] + SEP + a[2] + SEP + a[3] + ')';
 };
 
-if(typeof(exports) !== 'undefined') {
+if(typeof(exports) !== UNDEF) {
     exports.quat = quat;
 }
 ;
