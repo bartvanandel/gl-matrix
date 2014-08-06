@@ -197,10 +197,10 @@ vec4.div = vec4.divide;
  * @returns {vec4} out
  */
 vec4.min = function(out, a, b) {
-    out[0] = Math.min(a[0], b[0]);
-    out[1] = Math.min(a[1], b[1]);
-    out[2] = Math.min(a[2], b[2]);
-    out[3] = Math.min(a[3], b[3]);
+    out[0] = Math_min(a[0], b[0]);
+    out[1] = Math_min(a[1], b[1]);
+    out[2] = Math_min(a[2], b[2]);
+    out[3] = Math_min(a[3], b[3]);
     return out;
 };
 
@@ -213,10 +213,10 @@ vec4.min = function(out, a, b) {
  * @returns {vec4} out
  */
 vec4.max = function(out, a, b) {
-    out[0] = Math.max(a[0], b[0]);
-    out[1] = Math.max(a[1], b[1]);
-    out[2] = Math.max(a[2], b[2]);
-    out[3] = Math.max(a[3], b[3]);
+    out[0] = Math_max(a[0], b[0]);
+    out[1] = Math_max(a[1], b[1]);
+    out[2] = Math_max(a[2], b[2]);
+    out[3] = Math_max(a[3], b[3]);
     return out;
 };
 
@@ -265,7 +265,7 @@ vec4.distance = function(a, b) {
         y = b[1] - a[1],
         z = b[2] - a[2],
         w = b[3] - a[3];
-    return Math.sqrt(x*x + y*y + z*z + w*w);
+    return Math_sqrt(x*x + y*y + z*z + w*w);
 };
 
 /**
@@ -306,7 +306,7 @@ vec4.length = function (a) {
         y = a[1],
         z = a[2],
         w = a[3];
-    return Math.sqrt(x*x + y*y + z*z + w*w);
+    return Math_sqrt(x*x + y*y + z*z + w*w);
 };
 
 /**
@@ -379,7 +379,7 @@ vec4.normalize = function(out, a) {
         w = a[3];
     var len = x*x + y*y + z*z + w*w;
     if (len > 0) {
-        len = 1 / Math.sqrt(len);
+        len = 1 / Math_sqrt(len);
         out[0] = a[0] * len;
         out[1] = a[1] * len;
         out[2] = a[2] * len;
@@ -508,7 +508,7 @@ vec4.forEach = (function() {
         }
         
         if(count) {
-            l = Math.min((count * stride) + offset, a.length);
+            l = Math_min((count * stride) + offset, a.length);
         } else {
             l = a.length;
         }

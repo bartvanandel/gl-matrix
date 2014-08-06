@@ -195,8 +195,8 @@ mat2.mul = mat2.multiply;
  */
 mat2.rotate = function (out, a, rad) {
     var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
-        s = Math.sin(rad),
-        c = Math.cos(rad);
+        s = Math_sin(rad),
+        c = Math_cos(rad);
     out[0] = a0 *  c + a2 * s;
     out[1] = a1 *  c + a3 * s;
     out[2] = a0 * -s + a2 * c;
@@ -239,7 +239,10 @@ mat2.str = function (a) {
  * @returns {Number} Frobenius norm
  */
 mat2.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2)))
+    return(Math_sqrt(
+        sqr(a[0]) + sqr(a[1]) +
+        sqr(a[2]) + sqr(a[3])
+    ));
 };
 
 /**

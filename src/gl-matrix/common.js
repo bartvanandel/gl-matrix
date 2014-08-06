@@ -20,8 +20,33 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-var UNDEF = 'undefined';
-var SEP = ', ';
+var
+    // Define commonly used strings (compressed better)
+    UNDEF = 'undefined',
+    SEP = ', ',
+    
+    // Local references to used Math functions and constants
+    // (compresses better, may also be faster)
+    Math_       = Math,
+    Math_abs    = Math_.abs,
+    Math_acos   = Math_.acos,
+    Math_cos    = Math_.cos,
+    Math_max    = Math_.max,
+    Math_min    = Math_.min,
+    Math_PI     = Math_.PI,
+    Math_random = Math_.random,
+    Math_sin    = Math_.sin,
+    Math_sqrt   = Math_.sqrt,
+    Math_tan    = Math_.tan,
+
+    DEGREE = Math_PI / 180,
+    TWO_PI = 2 * Math_PI,
+
+    // Simple square function, often faster than using Math.pow(n, 2)
+    // See http://jsperf.com/math-pow-vs-square/
+    sqr = function(n) {
+        return n * n
+    };
 
 if(!GLMAT_EPSILON) {
     var GLMAT_EPSILON = 0.000001;
@@ -32,7 +57,7 @@ if(!GLMAT_ARRAY_TYPE) {
 }
 
 if(!GLMAT_RANDOM) {
-    var GLMAT_RANDOM = Math.random;
+    var GLMAT_RANDOM = Math_random;
 }
 
 /**
@@ -54,13 +79,11 @@ if(typeof(exports) !== UNDEF) {
     exports.glMatrix = glMatrix;
 }
 
-var degree = Math.PI / 180;
-
 /**
 * Convert Degree To Radian
 *
 * @param {Number} Angle in Degrees
 */
 glMatrix.toRadian = function(a){
-     return a * degree;
+     return a * DEGREE;
 }

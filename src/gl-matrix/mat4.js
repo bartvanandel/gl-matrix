@@ -420,7 +420,7 @@ mat4.scale = function(out, a, v) {
  */
 mat4.rotate = function (out, a, rad, axis) {
     var x = axis[0], y = axis[1], z = axis[2],
-        len = Math.sqrt(x * x + y * y + z * z),
+        len = Math_sqrt(x * x + y * y + z * z),
         s, c, t,
         a00, a01, a02, a03,
         a10, a11, a12, a13,
@@ -429,15 +429,15 @@ mat4.rotate = function (out, a, rad, axis) {
         b10, b11, b12,
         b20, b21, b22;
 
-    if (Math.abs(len) < GLMAT_EPSILON) { return null; }
+    if (Math_abs(len) < GLMAT_EPSILON) { return null; }
     
     len = 1 / len;
     x *= len;
     y *= len;
     z *= len;
 
-    s = Math.sin(rad);
-    c = Math.cos(rad);
+    s = Math_sin(rad);
+    c = Math_cos(rad);
     t = 1 - c;
 
     a00 = a[0]; a01 = a[1]; a02 = a[2]; a03 = a[3];
@@ -481,8 +481,8 @@ mat4.rotate = function (out, a, rad, axis) {
  * @returns {mat4} out
  */
 mat4.rotateX = function (out, a, rad) {
-    var s = Math.sin(rad),
-        c = Math.cos(rad),
+    var s = Math_sin(rad),
+        c = Math_cos(rad),
         a10 = a[4],
         a11 = a[5],
         a12 = a[6],
@@ -524,8 +524,8 @@ mat4.rotateX = function (out, a, rad) {
  * @returns {mat4} out
  */
 mat4.rotateY = function (out, a, rad) {
-    var s = Math.sin(rad),
-        c = Math.cos(rad),
+    var s = Math_sin(rad),
+        c = Math_cos(rad),
         a00 = a[0],
         a01 = a[1],
         a02 = a[2],
@@ -567,8 +567,8 @@ mat4.rotateY = function (out, a, rad) {
  * @returns {mat4} out
  */
 mat4.rotateZ = function (out, a, rad) {
-    var s = Math.sin(rad),
-        c = Math.cos(rad),
+    var s = Math_sin(rad),
+        c = Math_cos(rad),
         a00 = a[0],
         a01 = a[1],
         a02 = a[2],
@@ -738,7 +738,7 @@ mat4.frustum = function (out, left, right, bottom, top, near, far) {
  * @returns {mat4} out
  */
 mat4.perspective = function (out, fovy, aspect, near, far) {
-    var f = 1.0 / Math.tan(fovy / 2),
+    var f = 1.0 / Math_tan(fovy / 2),
         nf = 1 / (near - far);
     out[0] = f / aspect;
     out[1] = 0;
@@ -815,9 +815,9 @@ mat4.lookAt = function (out, eye, center, up) {
         centery = center[1],
         centerz = center[2];
 
-    if (Math.abs(eyex - centerx) < GLMAT_EPSILON &&
-        Math.abs(eyey - centery) < GLMAT_EPSILON &&
-        Math.abs(eyez - centerz) < GLMAT_EPSILON) {
+    if (Math_abs(eyex - centerx) < GLMAT_EPSILON &&
+        Math_abs(eyey - centery) < GLMAT_EPSILON &&
+        Math_abs(eyez - centerz) < GLMAT_EPSILON) {
         return mat4.identity(out);
     }
 
@@ -825,7 +825,7 @@ mat4.lookAt = function (out, eye, center, up) {
     z1 = eyey - centery;
     z2 = eyez - centerz;
 
-    len = 1 / Math.sqrt(z0 * z0 + z1 * z1 + z2 * z2);
+    len = 1 / Math_sqrt(z0 * z0 + z1 * z1 + z2 * z2);
     z0 *= len;
     z1 *= len;
     z2 *= len;
@@ -833,7 +833,7 @@ mat4.lookAt = function (out, eye, center, up) {
     x0 = upy * z2 - upz * z1;
     x1 = upz * z0 - upx * z2;
     x2 = upx * z1 - upy * z0;
-    len = Math.sqrt(x0 * x0 + x1 * x1 + x2 * x2);
+    len = Math_sqrt(x0 * x0 + x1 * x1 + x2 * x2);
     if (!len) {
         x0 = 0;
         x1 = 0;
@@ -849,7 +849,7 @@ mat4.lookAt = function (out, eye, center, up) {
     y1 = z2 * x0 - z0 * x2;
     y2 = z0 * x1 - z1 * x0;
 
-    len = Math.sqrt(y0 * y0 + y1 * y1 + y2 * y2);
+    len = Math_sqrt(y0 * y0 + y1 * y1 + y2 * y2);
     if (!len) {
         y0 = 0;
         y1 = 0;
@@ -901,7 +901,12 @@ mat4.str = function (a) {
  * @returns {Number} Frobenius norm
  */
 mat4.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2) ))
+    return(Math_sqrt(
+        sqr(a[ 0]) + sqr(a[ 1]) + sqr(a[ 2]) + sqr(a[ 3]) +
+        sqr(a[ 4]) + sqr(a[ 5]) + sqr(a[ 6]) + sqr(a[ 7]) +
+        sqr(a[ 8]) + sqr(a[ 9]) + sqr(a[10]) + sqr(a[11]) +
+        sqr(a[12]) + sqr(a[13]) + sqr(a[14]) + sqr(a[15])
+    ));
 };
 
 

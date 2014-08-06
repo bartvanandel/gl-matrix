@@ -308,8 +308,8 @@ mat3.rotate = function (out, a, rad) {
         a10 = a[3], a11 = a[4], a12 = a[5],
         a20 = a[6], a21 = a[7], a22 = a[8],
 
-        s = Math.sin(rad),
-        c = Math.cos(rad);
+        s = Math_sin(rad),
+        c = Math_cos(rad);
 
     out[0] = c * a00 + s * a10;
     out[1] = c * a01 + s * a11;
@@ -480,7 +480,11 @@ mat3.str = function (a) {
  * @returns {Number} Frobenius norm
  */
 mat3.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2)))
+    return(Math_sqrt(
+        sqr(a[0]) + sqr(a[1]) + sqr(a[2]) +
+        sqr(a[3]) + sqr(a[4]) + sqr(a[5]) +
+        sqr(a[6]) + sqr(a[7]) + sqr(a[8])
+    ));
 };
 
 

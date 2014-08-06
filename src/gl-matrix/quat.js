@@ -63,7 +63,7 @@ quat.rotationTo = (function() {
             if (vec3.length(tmpvec3) < 0.000001)
                 vec3.cross(tmpvec3, yUnitVec3, a);
             vec3.normalize(tmpvec3, tmpvec3);
-            quat.setAxisAngle(out, tmpvec3, Math.PI);
+            quat.setAxisAngle(out, tmpvec3, Math_PI);
             return out;
         } else if (dot > 0.999999) {
             out[0] = 0;
@@ -181,11 +181,11 @@ quat.identity = function(out) {
  **/
 quat.setAxisAngle = function(out, axis, rad) {
     rad = rad * 0.5;
-    var s = Math.sin(rad);
+    var s = Math_sin(rad);
     out[0] = s * axis[0];
     out[1] = s * axis[1];
     out[2] = s * axis[2];
-    out[3] = Math.cos(rad);
+    out[3] = Math_cos(rad);
     return out;
 };
 
@@ -248,7 +248,7 @@ quat.rotateX = function (out, a, rad) {
     rad *= 0.5; 
 
     var ax = a[0], ay = a[1], az = a[2], aw = a[3],
-        bx = Math.sin(rad), bw = Math.cos(rad);
+        bx = Math_sin(rad), bw = Math_cos(rad);
 
     out[0] = ax * bw + aw * bx;
     out[1] = ay * bw + az * bx;
@@ -269,7 +269,7 @@ quat.rotateY = function (out, a, rad) {
     rad *= 0.5; 
 
     var ax = a[0], ay = a[1], az = a[2], aw = a[3],
-        by = Math.sin(rad), bw = Math.cos(rad);
+        by = Math_sin(rad), bw = Math_cos(rad);
 
     out[0] = ax * bw - az * by;
     out[1] = ay * bw + aw * by;
@@ -290,7 +290,7 @@ quat.rotateZ = function (out, a, rad) {
     rad *= 0.5; 
 
     var ax = a[0], ay = a[1], az = a[2], aw = a[3],
-        bz = Math.sin(rad), bw = Math.cos(rad);
+        bz = Math_sin(rad), bw = Math_cos(rad);
 
     out[0] = ax * bw + ay * bz;
     out[1] = ay * bw - ax * bz;
@@ -314,7 +314,7 @@ quat.calculateW = function (out, a) {
     out[0] = x;
     out[1] = y;
     out[2] = z;
-    out[3] = -Math.sqrt(Math.abs(1.0 - x * x - y * y - z * z));
+    out[3] = -Math_sqrt(Math_abs(1.0 - x * x - y * y - z * z));
     return out;
 };
 
@@ -371,10 +371,10 @@ quat.slerp = function (out, a, b, t) {
     // calculate coefficients
     if ( (1.0 - cosom) > 0.000001 ) {
         // standard case (slerp)
-        omega  = Math.acos(cosom);
-        sinom  = Math.sin(omega);
-        scale0 = Math.sin((1.0 - t) * omega) / sinom;
-        scale1 = Math.sin(t * omega) / sinom;
+        omega  = Math_acos(cosom);
+        sinom  = Math_sin(omega);
+        scale0 = Math_sin((1.0 - t) * omega) / sinom;
+        scale1 = Math_sin(t * omega) / sinom;
     } else {        
         // "from" and "to" quaternions are very close 
         //  ... so we can do a linear interpolation
@@ -486,7 +486,7 @@ quat.fromMat3 = function(out, m) {
 
     if ( fTrace > 0.0 ) {
         // |w| > 1/2, may as well choose w > 1/2
-        fRoot = Math.sqrt(fTrace + 1.0);  // 2w
+        fRoot = Math_sqrt(fTrace + 1.0);  // 2w
         out[3] = 0.5 * fRoot;
         fRoot = 0.5/fRoot;  // 1/(4w)
         out[0] = (m[5]-m[7])*fRoot;
@@ -502,7 +502,7 @@ quat.fromMat3 = function(out, m) {
         var j = (i+1)%3;
         var k = (i+2)%3;
         
-        fRoot = Math.sqrt(m[i*3+i]-m[j*3+j]-m[k*3+k] + 1.0);
+        fRoot = Math_sqrt(m[i*3+i]-m[j*3+j]-m[k*3+k] + 1.0);
         out[i] = 0.5 * fRoot;
         fRoot = 0.5 / fRoot;
         out[3] = (m[j*3+k] - m[k*3+j]) * fRoot;

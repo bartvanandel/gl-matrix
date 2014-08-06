@@ -175,8 +175,8 @@ vec2.div = vec2.divide;
  * @returns {vec2} out
  */
 vec2.min = function(out, a, b) {
-    out[0] = Math.min(a[0], b[0]);
-    out[1] = Math.min(a[1], b[1]);
+    out[0] = Math_min(a[0], b[0]);
+    out[1] = Math_min(a[1], b[1]);
     return out;
 };
 
@@ -189,8 +189,8 @@ vec2.min = function(out, a, b) {
  * @returns {vec2} out
  */
 vec2.max = function(out, a, b) {
-    out[0] = Math.max(a[0], b[0]);
-    out[1] = Math.max(a[1], b[1]);
+    out[0] = Math_max(a[0], b[0]);
+    out[1] = Math_max(a[1], b[1]);
     return out;
 };
 
@@ -233,7 +233,7 @@ vec2.scaleAndAdd = function(out, a, b, scale) {
 vec2.distance = function(a, b) {
     var x = b[0] - a[0],
         y = b[1] - a[1];
-    return Math.sqrt(x*x + y*y);
+    return Math_sqrt(x*x + y*y);
 };
 
 /**
@@ -270,7 +270,7 @@ vec2.sqrDist = vec2.squaredDistance;
 vec2.length = function (a) {
     var x = a[0],
         y = a[1];
-    return Math.sqrt(x*x + y*y);
+    return Math_sqrt(x*x + y*y);
 };
 
 /**
@@ -336,7 +336,7 @@ vec2.normalize = function(out, a) {
     var len = x*x + y*y;
     if (len > 0) {
         //TODO: evaluate use of glm_invsqrt here?
-        len = 1 / Math.sqrt(len);
+        len = 1 / Math_sqrt(len);
         out[0] = a[0] * len;
         out[1] = a[1] * len;
     }
@@ -396,9 +396,9 @@ vec2.lerp = function (out, a, b, t) {
  */
 vec2.random = function (out, scale) {
     scale = scale || 1.0;
-    var r = GLMAT_RANDOM() * 2.0 * Math.PI;
-    out[0] = Math.cos(r) * scale;
-    out[1] = Math.sin(r) * scale;
+    var r = GLMAT_RANDOM() * TWO_PI;
+    out[0] = Math_cos(r) * scale;
+    out[1] = Math_sin(r) * scale;
     return out;
 };
 
@@ -495,7 +495,7 @@ vec2.forEach = (function() {
         }
         
         if(count) {
-            l = Math.min((count * stride) + offset, a.length);
+            l = Math_min((count * stride) + offset, a.length);
         } else {
             l = a.length;
         }

@@ -186,9 +186,9 @@ vec3.div = vec3.divide;
  * @returns {vec3} out
  */
 vec3.min = function(out, a, b) {
-    out[0] = Math.min(a[0], b[0]);
-    out[1] = Math.min(a[1], b[1]);
-    out[2] = Math.min(a[2], b[2]);
+    out[0] = Math_min(a[0], b[0]);
+    out[1] = Math_min(a[1], b[1]);
+    out[2] = Math_min(a[2], b[2]);
     return out;
 };
 
@@ -201,9 +201,9 @@ vec3.min = function(out, a, b) {
  * @returns {vec3} out
  */
 vec3.max = function(out, a, b) {
-    out[0] = Math.max(a[0], b[0]);
-    out[1] = Math.max(a[1], b[1]);
-    out[2] = Math.max(a[2], b[2]);
+    out[0] = Math_max(a[0], b[0]);
+    out[1] = Math_max(a[1], b[1]);
+    out[2] = Math_max(a[2], b[2]);
     return out;
 };
 
@@ -249,7 +249,7 @@ vec3.distance = function(a, b) {
     var x = b[0] - a[0],
         y = b[1] - a[1],
         z = b[2] - a[2];
-    return Math.sqrt(x*x + y*y + z*z);
+    return Math_sqrt(x*x + y*y + z*z);
 };
 
 /**
@@ -288,7 +288,7 @@ vec3.length = function (a) {
     var x = a[0],
         y = a[1],
         z = a[2];
-    return Math.sqrt(x*x + y*y + z*z);
+    return Math_sqrt(x*x + y*y + z*z);
 };
 
 /**
@@ -358,7 +358,7 @@ vec3.normalize = function(out, a) {
     var len = x*x + y*y + z*z;
     if (len > 0) {
         //TODO: evaluate use of glm_invsqrt here?
-        len = 1 / Math.sqrt(len);
+        len = 1 / Math_sqrt(len);
         out[0] = a[0] * len;
         out[1] = a[1] * len;
         out[2] = a[2] * len;
@@ -424,12 +424,12 @@ vec3.lerp = function (out, a, b, t) {
 vec3.random = function (out, scale) {
     scale = scale || 1.0;
 
-    var r = GLMAT_RANDOM() * 2.0 * Math.PI;
+    var r = GLMAT_RANDOM() * TWO_PI;
     var z = (GLMAT_RANDOM() * 2.0) - 1.0;
-    var zScale = Math.sqrt(1.0-z*z) * scale;
+    var zScale = Math_sqrt(1.0-z*z) * scale;
 
-    out[0] = Math.cos(r) * zScale;
-    out[1] = Math.sin(r) * zScale;
+    out[0] = Math_cos(r) * zScale;
+    out[1] = Math_sin(r) * zScale;
     out[2] = z * scale;
     return out;
 };
@@ -513,8 +513,8 @@ vec3.rotateX = function(out, a, b, c){
 
 	  //perform rotation
 	  r[0] = p[0];
-	  r[1] = p[1]*Math.cos(c) - p[2]*Math.sin(c);
-	  r[2] = p[1]*Math.sin(c) + p[2]*Math.cos(c);
+	  r[1] = p[1]*Math_cos(c) - p[2]*Math_sin(c);
+	  r[2] = p[1]*Math_sin(c) + p[2]*Math_cos(c);
 
 	  //translate to correct position
 	  out[0] = r[0] + b[0];
@@ -540,9 +540,9 @@ vec3.rotateY = function(out, a, b, c){
   	p[2] = a[2] - b[2];
   
   	//perform rotation
-  	r[0] = p[2]*Math.sin(c) + p[0]*Math.cos(c);
+  	r[0] = p[2]*Math_sin(c) + p[0]*Math_cos(c);
   	r[1] = p[1];
-  	r[2] = p[2]*Math.cos(c) - p[0]*Math.sin(c);
+  	r[2] = p[2]*Math_cos(c) - p[0]*Math_sin(c);
   
   	//translate to correct position
   	out[0] = r[0] + b[0];
@@ -568,8 +568,8 @@ vec3.rotateZ = function(out, a, b, c){
   	p[2] = a[2] - b[2];
   
   	//perform rotation
-  	r[0] = p[0]*Math.cos(c) - p[1]*Math.sin(c);
-  	r[1] = p[0]*Math.sin(c) + p[1]*Math.cos(c);
+  	r[0] = p[0]*Math_cos(c) - p[1]*Math_sin(c);
+  	r[1] = p[0]*Math_sin(c) + p[1]*Math_cos(c);
   	r[2] = p[2];
   
   	//translate to correct position
@@ -606,7 +606,7 @@ vec3.forEach = (function() {
         }
         
         if(count) {
-            l = Math.min((count * stride) + offset, a.length);
+            l = Math_min((count * stride) + offset, a.length);
         } else {
             l = a.length;
         }
